@@ -47,15 +47,17 @@
   }
 
   function updatePlay() {
-    play.setAttribute('aria-label', paused ? 'Retomar passagem automática' : 'Pausar passagem automática');
-    play.querySelector('span').textContent = paused ? '▶' : 'Ⅱ';
+    if (play) {
+      play.setAttribute('aria-label', paused ? 'Retomar passagem automática' : 'Pausar passagem automática');
+      play.querySelector('span').textContent = paused ? '▶' : 'Ⅱ';
+    }
     schedule();
   }
 
   document.getElementById('hero-carousel-prev').addEventListener('click', () => show(index - 1, true));
   document.getElementById('hero-carousel-next').addEventListener('click', () => show(index + 1, true));
   dots.forEach(button => button.addEventListener('click', () => show(Number(button.dataset.heroSlide), true)));
-  play.addEventListener('click', () => { paused = !paused; updatePlay(); });
+  play?.addEventListener('click', () => { paused = !paused; updatePlay(); });
 
   carousel.addEventListener('pointerenter', event => {
     if (event.pointerType === 'mouse' || event.pointerType === 'pen') { hovering = true; schedule(); }

@@ -12,23 +12,32 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/font-900.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/seara-1.webp" as="image">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=equipe-atual">
+  <script src="vendor/pdf-lib.min.js" defer></script>
+  <script src="briefing-pdf.js" defer></script>
   <script src="app.js" defer></script>
   <script src="carousel.js" defer></script>
   <script src="brands.js" defer></script>
   <script src="catalog-carousel.js" defer></script>
+  <script src="service-reel.js" defer></script>
+  <script src="team-carousel.js" defer></script>
+  <script src="process-motion.js" defer></script>
+  <script src="atendimento.js" defer></script>
 </head>
 <body>
+<svg class="team-filter-defs" xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false"><defs><filter id="team-portrait-cutout" color-interpolation-filters="sRGB"><feColorMatrix in="SourceGraphic" type="matrix" values="1 -1 0 0 0  0 1 -1 0 0  -1 0 1 0 0  0 0 0 1 0" result="chroma"/><feColorMatrix in="chroma" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  -28 -28 -28 1 .7" result="portrait-mask"/><feComponentTransfer in="portrait-mask" result="clean-mask"><feFuncA type="table" tableValues="0 0 0 1 1"/></feComponentTransfer><feMorphology in="clean-mask" operator="erode" radius="4" result="opened-edge"/><feMorphology in="opened-edge" operator="dilate" radius="4" result="opened-mask"/><feMorphology in="opened-mask" operator="dilate" radius="3" result="closed-edge"/><feMorphology in="closed-edge" operator="erode" radius="3" result="edge-mask"/><feComposite in="SourceGraphic" in2="edge-mask" operator="in"/></filter><filter id="process-motion-green" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 .87  0 0 0 0 1  0 0 0 0 .64  -1 0 0 1 0"/></filter></defs></svg>
+
 <a href="#conteudo" class="skip-link">Ir para o conteúdo</a>
 <header class="header">
   <div class="header-brands"><a class="brand brand-ck" href="#inicio" aria-label="Conexão K, início"><img src="assets/logo-conexao-k.png" width="1769" height="1578" alt="Conexão K"></a><a class="brand" href="#inicio" aria-label="XK Eventos, início"><img src="assets/logo.png" width="94" height="60" alt="XK Eventos"></a></div>
   <nav class="desktop-nav" aria-label="Navegação principal">
     <a href="#sobre">A XK</a><a href="#servicos">Serviços</a><a href="#locacao-brindes">Locação e brindes</a><a href="#portfolio">Portfólio</a><a href="#contato">Contato</a>
   </nav>
-  <div class="header-actions"><a class="header-whatsapp" href="https://wa.me/5581995042474" target="_blank" rel="noopener noreferrer" aria-label="Conversar no WhatsApp: (81) 99504-2474 (abre em nova aba)" title="Fale com a XK no WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.7 7.4L3 20.5l1.5-4.7A8.5 8.5 0 1 1 20.5 11.6Z"/><path d="m8.3 7.2 1.2-.2 1.1 2.5-1.1 1.1a8.7 8.7 0 0 0 3.8 3.7l1.1-1.1 2.4 1.2-.1 1.2c-.1 1-1.2 1.4-2.1 1.2-4.2-.9-7.4-4.2-8-7.1-.2-1 .6-2.2 1.7-2.5Z"/></svg><span>WhatsApp</span></a><a class="button button-small button-dark" href="#orcamento">Vamos realizar <span aria-hidden="true">↗</span></a><button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menu"><span></span><span></span></button></div>
-  <nav id="mobile-menu" class="mobile-menu" aria-label="Navegação no celular" hidden><a href="#sobre">A XK</a><a href="#servicos">Serviços</a><a href="#locacao-brindes">Locação e brindes</a><a href="#portfolio">Portfólio</a><a href="#contato">Contato</a><a href="#orcamento">Solicitar orçamento ↗</a><a href="https://wa.me/5581995042474" target="_blank" rel="noopener noreferrer">Fale pelo WhatsApp ↗</a></nav>
+  <div class="header-actions"><button type="button" class="rental-open" data-rental-open aria-haspopup="dialog" aria-controls="rental-dialog" aria-label="Catálogo de locação"><span class="rental-pointer" aria-hidden="true">➜</span><span>Catálogo de locação</span></button><a class="header-whatsapp" href="https://wa.me/5581995042474" target="_blank" rel="noopener noreferrer" aria-label="Conversar no WhatsApp: (81) 99504-2474 (abre em nova aba)" title="Fale com a XK no WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.7 7.4L3 20.5l1.5-4.7A8.5 8.5 0 1 1 20.5 11.6Z"/><path d="m8.3 7.2 1.2-.2 1.1 2.5-1.1 1.1a8.7 8.7 0 0 0 3.8 3.7l1.1-1.1 2.4 1.2-.1 1.2c-.1 1-1.2 1.4-2.1 1.2-4.2-.9-7.4-4.2-8-7.1-.2-1 .6-2.2 1.7-2.5Z"/></svg><span>WhatsApp</span></a><a class="button button-small button-dark" href="#orcamento">Vamos realizar <span aria-hidden="true">↗</span></a><button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menu"><span></span><span></span></button></div>
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Navegação no celular" hidden><a href="#sobre">A XK</a><a href="#servicos">Serviços</a><a href="#locacao-brindes">Locação e brindes</a><a href="#portfolio">Portfólio</a><a href="#contato">Contato</a><a href="#orcamento">Solicitar orçamento ↗</a><button type="button" class="rental-open" data-rental-open aria-haspopup="dialog" aria-controls="rental-dialog" aria-label="Catálogo de locação"><span class="rental-pointer" aria-hidden="true">➜</span><span>Catálogo de locação</span></button><a href="https://wa.me/5581995042474" target="_blank" rel="noopener noreferrer">Fale pelo WhatsApp ↗</a></nav>
 </header>
 <main id="conteudo">
+  <div class="hero-background">
   <section class="hero wrap" id="inicio" aria-labelledby="hero-title">
     <div class="hero-copy"><p class="eyebrow"><span class="status-dot"></span> Estratégia. Criatividade. Experiência.</p>
       <h1 id="hero-title"><span class="sr-only">Aqui suas ideias tornam-se reais.</span><span class="hero-typewriter" aria-hidden="true"><span class="hero-typewriter-reserve">Aqui suas<br><span class="blue">ideias</span><br>tornam-se <span class="outline">reais.</span></span><span class="hero-typewriter-output">Aqui suas<br><span class="blue">ideias</span><br>tornam-se <span class="outline">reais.</span></span></span></h1>
@@ -45,17 +54,62 @@
       </div>
       <div class="hero-carousel-controls" hidden>
         <div class="hero-carousel-dots" role="group" aria-label="Escolher fotografia"><button type="button" class="hero-carousel-dot" data-hero-slide="0" aria-label="Mostrar Faça sua festa" aria-pressed="true" aria-controls="hero-carousel-slides"><span></span></button><button type="button" class="hero-carousel-dot" data-hero-slide="1" aria-label="Mostrar material promocional e ações de campo" aria-pressed="false" aria-controls="hero-carousel-slides"><span></span></button><button type="button" class="hero-carousel-dot" data-hero-slide="2" aria-label="Mostrar feiras e eventos corporativos" aria-pressed="false" aria-controls="hero-carousel-slides"><span></span></button></div>
-        <div class="hero-carousel-actions"><button type="button" class="hero-carousel-control hero-carousel-play" id="hero-carousel-play" aria-label="Pausar passagem automática"><span aria-hidden="true">Ⅱ</span></button><button type="button" class="hero-carousel-control" id="hero-carousel-prev" aria-label="Fotografia anterior" aria-controls="hero-carousel-slides"><span aria-hidden="true">←</span></button><button type="button" class="hero-carousel-control" id="hero-carousel-next" aria-label="Próxima fotografia" aria-controls="hero-carousel-slides"><span aria-hidden="true">→</span></button></div>
+        <div class="hero-carousel-actions"><button type="button" class="hero-carousel-control" id="hero-carousel-prev" aria-label="Fotografia anterior" aria-controls="hero-carousel-slides"><span aria-hidden="true">←</span></button><button type="button" class="hero-carousel-control" id="hero-carousel-next" aria-label="Próxima fotografia" aria-controls="hero-carousel-slides"><span aria-hidden="true">→</span></button></div>
       </div>
       <p class="sr-only" id="hero-carousel-status" role="status"></p>
       <div class="visual-bottomline"><span>Portfólio selecionado / 2026</span><a href="assets/portfolio-xk-2026.pdf" download="Portfolio-XK-Eventos-2026.pdf">Baixar apresentação <span aria-hidden="true">↓</span></a></div>
     </div>
   </section>
+  <div class="hero-wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 144" preserveAspectRatio="none" focusable="false">
+      <defs>
+        <pattern id="hero-wave-graphics" width="280" height="74" patternUnits="userSpaceOnUse" patternTransform="rotate(-9)">
+          <rect width="280" height="74" fill="#e1e5eb"/>
+          <path d="M-32 74 44 0h31L-1 74zm39 0L83 0h9L16 74z" fill="#d5dbe3"/>
+          <path d="M141 0 179 37 141 74m22-74 38 37-38 37" fill="none" stroke="#edf0f4" stroke-width="3"/>
+          <circle cx="245" cy="37" r="25" fill="none" stroke="#edf0f4" stroke-width="2"/>
+          <circle cx="245" cy="37" r="14" fill="none" stroke="#d5dbe3" stroke-width="6"/>
+        </pattern>
+      </defs>
+      <path d="M-35 90C245 -29 330 37 562 86S890 27 1064 52s272 92 411 12" fill="none" stroke="#edf0f4" stroke-width="41"/>
+      <path d="M-35 90C245 -29 330 37 562 86S890 27 1064 52s272 92 411 12" fill="none" stroke="url(#hero-wave-graphics)" stroke-width="33"/>
+    </svg>
+  </div>
+  <section class="about-banner" id="equipe-em-destaque" aria-label="A XK Eventos em destaque">
+    <img src="assets/equipe-criativa-em-destaque-foto-nova.svg" width="1715" height="917" alt="Uma boa ideia merece uma grande entrega. Equipe da XK Eventos reunida em um evento corporativo." decoding="async">
+    <div class="xk-orbit" aria-hidden="true">
+      <div class="xk-orbit-track">
+        <div class="xk-orbit-tile xk-orbit-blue"><svg width="100%" height="100%" viewBox="0 0 64 64" focusable="false"><path d="M0 64 64 0h15L15 64zm-18 0L46 0h8L-10 64z" fill="var(--lime)"/></svg></div>
+        <div class="xk-orbit-tile xk-orbit-blue"><img class="xk-orbit-logo" src="assets/logo.png" alt="" loading="lazy"></div>
+        <div class="xk-orbit-tile xk-orbit-lime"></div>
+        <div class="xk-orbit-tile xk-orbit-lime"><svg width="100%" height="100%" viewBox="0 0 64 64" focusable="false"><circle cx="32" cy="32" r="25" fill="none" stroke="var(--blue)" stroke-width="2"/><circle cx="32" cy="32" r="16" fill="none" stroke="var(--blue)" stroke-width="6"/><circle cx="32" cy="32" r="4" fill="var(--ink)"/></svg></div>
+        <div class="xk-orbit-tile xk-orbit-ink">✳</div>
+        <div class="xk-orbit-tile xk-orbit-paper">↗</div>
+        <div class="xk-orbit-tile xk-orbit-paper"><svg width="100%" height="100%" viewBox="0 0 64 64" focusable="false"><path d="M5 12h54L32 32zm0 40h54L32 32z" fill="var(--blue)"/><circle cx="32" cy="32" r="6" fill="var(--lime)"/></svg></div>
+        <div class="xk-orbit-tile xk-orbit-blue xk-orbit-color"></div>
+      </div>
+    </div>
+    <a class="about-banner-link" href="#servicos"><span>Conheça nossas soluções ↗</span></a>
+  </section>
+  </div>
+  <section class="about-banner" id="sobre" aria-labelledby="about-title">
+    <div class="sr-only"><div class="about-copy"><p class="eyebrow"><span class="section-index">01 /</span> A XK Eventos</p><h2 id="about-title">Uma boa ideia merece uma <span class="blue">grande entrega.</span></h2><p>Somos uma agência full service de eventos, marketing e comunicação. Reunimos visão estratégica, criação e inteligência operacional para transformar o objetivo da sua marca em experiência.</p><p>Com sede em Paulista, Pernambuco, atuamos em todo o território nacional através de uma rede de parceiros. Acompanhamos cada etapa: do planejamento à execução final.</p><div class="about-bottom"></div></div></div>
+    <img src="assets/lamina-equipe-xk-foto-nova.svg" width="1142" height="608" alt="Equipe da XK Eventos reunida em um evento corporativo." loading="lazy" decoding="async">
+    <a class="about-banner-link" href="#servicos"><span>Conheça nossas soluções ↗</span></a>
+  </section>
   <div class="principles" aria-label="Nossa atuação"><div class="wrap principles-inner"><span>Planejamos com propósito.</span><i aria-hidden="true">✳</i><span>Criamos com personalidade.</span><i aria-hidden="true">✳</i><span>Executamos com precisão.</span><i aria-hidden="true">✳</i></div></div>
-  <div class="section-tone tone-about"><section class="section wrap about" id="sobre" aria-labelledby="about-title">
-    <div class="about-art"><img src="assets/equipe-foyer-nova.svg" width="1500" height="750" alt="Equipe da XK Eventos reunida no foyer" loading="lazy"><div class="about-art-caption"><span>Paulista, PE / Brasil ↗</span></div></div>
-    <div class="about-copy"><p class="eyebrow"><span class="section-index">01 /</span> A XK Eventos</p><h2 id="about-title">Uma boa ideia<br>merece uma<br><span class="blue">grande entrega.</span></h2><p>Somos uma agência full service de eventos, marketing e comunicação. Reunimos visão estratégica, criação e inteligência operacional para transformar o objetivo da sua marca em experiência.</p><p>Com sede em Paulista, Pernambuco, atuamos em todo o território nacional através de uma rede de parceiros. Acompanhamos cada etapa: do planejamento à execução final.</p><div class="about-bottom"><a class="text-link" href="#servicos">Conheça nossas soluções <span aria-hidden="true">↗</span></a><img class="about-balloon" src="assets/balao-cachorro-cromado.png" width="1284" height="1225" alt="" aria-hidden="true" loading="lazy"></div></div>
-  </section></div>
+  <section class="team-section section" id="equipe" aria-labelledby="team-title"><div class="wrap">
+    <div class="team-heading"><h2 id="team-title"><span>Nossa</span> equipe.</h2><div class="team-tools"><span class="team-swipe" aria-hidden="true">Deslize para conhecer</span><div class="team-controls" role="group" aria-label="Navegar pela equipe" hidden><button class="team-previous" type="button" aria-label="Integrantes anteriores" aria-controls="team-track">←</button><button class="team-next" type="button" aria-label="Próximos integrantes" aria-controls="team-track">→</button></div></div></div>
+    <ul class="team-row" id="team-track" tabindex="0" aria-label="Equipe XK Eventos: deslize para conhecer todos">
+      <li class="team-person team-person--lime"><div class="team-portrait"><span class="team-shape team-petals" aria-hidden="true"></span><span class="team-accent" aria-hidden="true">✳</span><div class="team-photo"><svg class="team-headshot" viewBox="20 80 1050 1050" role="img" aria-label="Ana Paula Leal, Diretora Executiva" focusable="false"><image href="assets/team/ana-paula-leal.png" width="1093" height="1439" filter="url(#team-portrait-cutout)" /></svg></div></div><p>Ana Paula<br><strong>Leal</strong></p><span class="team-role">Diretora Executiva</span></li>
+      <li class="team-person team-person--lime"><div class="team-portrait"><span class="team-shape team-star" aria-hidden="true"></span><span class="team-accent" aria-hidden="true">✳</span><div class="team-photo"><svg class="team-headshot" viewBox="80 140 970 970" role="img" aria-label="Karlus Demetrius, Diretor Comercial" focusable="false"><image href="assets/team/karlus-demetrius.png" width="1113" height="1414" filter="url(#team-portrait-cutout)" /></svg></div></div><p>Karlus<br><strong>Demetrius</strong></p><span class="team-role">Diretor Comercial</span></li>
+      <li class="team-person team-person--blue"><div class="team-portrait"><span class="team-shape team-star" aria-hidden="true"></span><span class="team-accent" aria-hidden="true">✳</span><div class="team-photo"><svg class="team-headshot" viewBox="80 90 980 980" role="img" aria-label="Felipe Bonner, Diretor de Arte" focusable="false"><image href="assets/team/felipe-bonner.png" width="1138" height="1382" filter="url(#team-portrait-cutout)" /></svg></div></div><p>Felipe<br><strong>Bonner</strong></p><span class="team-role">Diretor de Arte</span></li>
+      <li class="team-person team-person--blue"><div class="team-portrait"><span class="team-shape team-petals" aria-hidden="true"></span><span class="team-accent" aria-hidden="true">✳</span><div class="team-photo"><svg class="team-headshot" viewBox="40 120 1010 1010" role="img" aria-label="Crystian Fernando, Produtor" focusable="false"><image href="assets/team/crystian-fernando.png" width="1091" height="1442" filter="url(#team-portrait-cutout)" /></svg></div></div><p>Crystian<br><strong>Fernando</strong></p><span class="team-role">Produtor</span></li>
+      <li class="team-person team-person--lime"><div class="team-portrait"><span class="team-shape team-petals" aria-hidden="true"></span><span class="team-accent" aria-hidden="true">✳</span><div class="team-photo"><svg class="team-headshot" viewBox="40 100 1000 1000" role="img" aria-label="Luiz Felipe, Criativo" focusable="false"><image href="assets/team/luiz-felipe.png" width="1080" height="1457" filter="url(#team-portrait-cutout)" /></svg></div></div><p>Luiz<br><strong>Felipe</strong></p><span class="team-role">Criativo</span></li>
+      <li class="team-person team-person--lime"><div class="team-portrait"><span class="team-shape team-petals" aria-hidden="true"></span><span class="team-accent" aria-hidden="true">✳</span><div class="team-photo"><svg class="team-headshot" viewBox="20 180 980 980" role="img" aria-label="Cristina Teixeira, Atendimento" focusable="false"><image href="assets/team/cristina-teixeira.png" width="1013" height="1552" filter="url(#team-portrait-cutout)" /></svg></div></div><p>Cristina<br><strong>Teixeira</strong></p><span class="team-role">Atendimento</span></li>
+      <li class="team-person team-person--blue"><div class="team-portrait"><span class="team-shape team-star" aria-hidden="true"></span><span class="team-accent" aria-hidden="true">✳</span><div class="team-photo"><svg class="team-headshot" viewBox="70 220 1060 1080" role="img" aria-label="Laura Marina, Secretária" focusable="false"><image href="assets/team/laura-marina.png" width="1196" height="1315" filter="url(#team-portrait-cutout)" /></svg></div></div><p>Laura<br><strong>Marina</strong></p><span class="team-role">Secretária</span></li>
+    </ul>
+  </div></section>
   <section class="services section" id="servicos" aria-labelledby="services-title"><div class="services-brand-strip" aria-hidden="true"></div><div class="wrap">
     <div class="section-heading"><div><p class="eyebrow"><span class="section-index">02 /</span> O que fazemos</p><h2 id="services-title">Tudo se conecta.<br><span class="blue">A gente realiza.</span></h2></div><p>Seis frentes de atuação.<br>Uma estratégia construída<br>para a sua marca.</p></div>
     <div class="services-grid">
@@ -68,6 +122,20 @@
     </div>
     <p class="service-footnote">Estrutura, som, luz, grid, uniformes, gráfica digital e brindes personalizados também fazem parte das nossas soluções.</p>
   </div></section>
+  <div class="service-reel" data-theme="blue" role="img" aria-label="Nossas soluções: brindes, eventos, estrutura, som, luz, gráfica digital, convenções, feiras, PDV e logística.">
+    <div class="reel-window"><ul class="reel-track" aria-hidden="true">
+      <li class="reel-row"><span class="reel-word is-active"><span>Brindes</span></span></li>
+      <li class="reel-row"><span class="reel-word"><span>Eventos</span></span></li>
+      <li class="reel-row"><span class="reel-word"><span>Estrutura</span></span></li>
+      <li class="reel-row"><span class="reel-word"><span>Som</span></span></li>
+      <li class="reel-row"><span class="reel-word"><span>Luz</span></span></li>
+      <li class="reel-row"><span class="reel-word"><span>Gráfica digital</span></span></li>
+      <li class="reel-row"><span class="reel-word"><span>Convenções</span></span></li>
+      <li class="reel-row"><span class="reel-word"><span>Feiras</span></span></li>
+      <li class="reel-row"><span class="reel-word"><span>PDV</span></span></li>
+      <li class="reel-row"><span class="reel-word"><span>Logística</span></span></li>
+    </ul></div>
+  </div>
   <section class="catalog-section section" id="locacao-brindes" aria-labelledby="catalog-title"><div class="wrap">
     <div class="section-heading"><div><p class="eyebrow"><span class="section-index">03 /</span> Locação e brindes</p><h2 id="catalog-title">Estrutura para acontecer.<br><span class="blue">Detalhes para ficar.</span></h2></div><p>Do equipamento que dá vida ao evento<br>ao brinde que leva a sua marca adiante.</p></div>
     <div class="catalog-toolbar"><div class="catalog-filters" role="group" aria-label="Filtrar locação e brindes"><button type="button" class="catalog-filter active" data-catalog-filter="todos" aria-pressed="true">Todas as soluções <span>06</span></button><button type="button" class="catalog-filter" data-catalog-filter="locacao" aria-pressed="false">Locação</button><button type="button" class="catalog-filter" data-catalog-filter="brindes" aria-pressed="false">Brindes e personalizados</button></div><span class="catalog-toolbar-note">Escolha o que faz sentido para o seu projeto.</span></div>
@@ -76,11 +144,11 @@
     <button class="catalog-arrow catalog-prev" type="button" aria-label="Soluções anteriores" aria-controls="catalog-track" hidden>←</button>
     <div class="catalog-grid" id="catalog-track" tabindex="0" aria-label="Soluções: deslize ou use as setas para navegar">
       <article class="catalog-card" data-catalog-item="som-luz" data-catalog-category="locacao" data-catalog-name="Som e iluminação" data-catalog-service="Locação de equipamentos" aria-labelledby="catalog-som-luz-title">
-        <div class="catalog-visual"><span class="catalog-category">Locação</span><svg viewBox="0 0 110 110" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="13" y="16" width="38" height="68" rx="4"/><circle cx="32" cy="61" r="12"/><circle cx="32" cy="32" r="5"/><path d="M66 22h20l8 12-8 12H66zM74 47v27M60 84l14-10 14 10M70 14l-4-7M91 18l7-4M97 39l7 2"/></svg><span class="catalog-visual-mark" aria-hidden="true">↗</span></div>
+        <div class="catalog-visual catalog-visual-photo"><img src="assets/som-e-iluminacao.webp" width="1200" height="720" alt="Caixas de som e refletores iluminando o palco" loading="lazy"></div>
         <div class="catalog-card-copy"><h3 id="catalog-som-luz-title">Som e iluminação</h3><p>Sonorização e iluminação cênica para apresentações, encontros e ações da sua marca.</p><span class="catalog-tags">Som · Iluminação cênica</span><button type="button" class="text-link catalog-add" data-catalog-add aria-label="Incluir Som e iluminação no orçamento"><span class="catalog-add-text">Incluir no orçamento</span><span aria-hidden="true">↗</span></button></div>
       </article>
       <article class="catalog-card" data-catalog-item="led" data-catalog-category="locacao" data-catalog-name="Painéis e totens de LED" data-catalog-service="Locação de equipamentos" aria-labelledby="catalog-led-title">
-        <div class="catalog-visual"><span class="catalog-category">Locação</span><svg viewBox="0 0 110 110" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="10" y="17" width="90" height="59" rx="4"/><path d="M40 88h30M55 76v12M10 37h90M10 56h90M32 17v59M55 17v59M78 17v59"/></svg><span class="catalog-visual-mark" aria-hidden="true">↗</span></div>
+        <div class="catalog-visual catalog-visual-photo"><img src="assets/paineis-e-totens-led.webp" width="1200" height="720" alt="Painéis e totem de LED da XK Eventos montados no palco" loading="lazy"></div>
         <div class="catalog-card-copy"><h3 id="catalog-led-title">Painéis e totens de LED</h3><p>Soluções em LED para dar destaque à comunicação e ao conteúdo do seu evento.</p><span class="catalog-tags">Painéis de LED · Totens de LED</span><button type="button" class="text-link catalog-add" data-catalog-add aria-label="Incluir Painéis e totens de LED no orçamento"><span class="catalog-add-text">Incluir no orçamento</span><span aria-hidden="true">↗</span></button></div>
       </article>
       <article class="catalog-card" data-catalog-item="fotos" data-catalog-category="locacao" data-catalog-name="Totem de fotos" data-catalog-service="Locação de equipamentos" aria-labelledby="catalog-fotos-title">
@@ -88,15 +156,15 @@
         <div class="catalog-card-copy"><h3 id="catalog-fotos-title">Totem de fotos</h3><p>Uma experiência fotográfica para registrar os encontros e levar a marca para a lembrança.</p><span class="catalog-tags">Foto personalizada · Ativação</span><button type="button" class="text-link catalog-add" data-catalog-add aria-label="Incluir Totem de fotos no orçamento"><span class="catalog-add-text">Incluir no orçamento</span><span aria-hidden="true">↗</span></button></div>
       </article>
       <article class="catalog-card" data-catalog-item="kits" data-catalog-category="brindes" data-catalog-name="Kits personalizados" data-catalog-service="Brindes e personalizados" aria-labelledby="catalog-kits-title">
-        <div class="catalog-visual"><span class="catalog-category">Brindes e personalizados</span><svg viewBox="0 0 110 110" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="18" y="40" width="75" height="48" rx="3"/><path d="M12 29h87v12H12zM48 29v59M62 29v59"/><path d="M55 29C29 28 22 16 31 11c10-5 23 6 24 18zm0 0c26-1 33-13 24-18-10-5-23 6-24 18z"/></svg><span class="catalog-visual-mark" aria-hidden="true">↗</span></div>
+        <div class="catalog-visual catalog-visual-photo"><img src="assets/kits-personalizados-unilever.webp" width="1200" height="747" alt="Kit personalizado da Unilever em caixa kraft, com doces, mel e castanhas." loading="lazy"></div>
         <div class="catalog-card-copy"><h3 id="catalog-kits-title">Kits personalizados</h3><p>Combine peças, embalagens e personalização para a ocasião e o público da sua ação.</p><span class="catalog-tags">Kits para eventos · Presentes corporativos</span><button type="button" class="text-link catalog-add" data-catalog-add aria-label="Incluir Kits personalizados no orçamento"><span class="catalog-add-text">Incluir no orçamento</span><span aria-hidden="true">↗</span></button></div>
       </article>
       <article class="catalog-card" data-catalog-item="bolsas" data-catalog-category="brindes" data-catalog-name="Bolsas e acessórios" data-catalog-service="Brindes e personalizados" aria-labelledby="catalog-bolsas-title">
-        <div class="catalog-visual"><span class="catalog-category">Brindes e personalizados</span><svg viewBox="0 0 110 110" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M25 32h60l7 58H18zM40 35V24a15 15 0 0 1 30 0v11"/><rect x="37" y="52" width="36" height="22" rx="3"/><path d="M46 63h18"/></svg><span class="catalog-visual-mark" aria-hidden="true">↗</span></div>
+        <div class="catalog-visual catalog-visual-photo"><img src="assets/bolsas-e-acessorios-heineken.webp" width="1200" height="745" alt="Ecobag, bolsa térmica, nécessaire e chaveiro personalizados da Heineken." loading="lazy"></div>
         <div class="catalog-card-copy"><h3 id="catalog-bolsas-title">Bolsas e acessórios</h3><p>Itens úteis no dia do evento e na rotina, com a identidade da sua marca.</p><span class="catalog-tags">Ecobags · Mochilas · Bolsas térmicas</span><button type="button" class="text-link catalog-add" data-catalog-add aria-label="Incluir Bolsas e acessórios no orçamento"><span class="catalog-add-text">Incluir no orçamento</span><span aria-hidden="true">↗</span></button></div>
       </article>
       <article class="catalog-card" data-catalog-item="uniformes" data-catalog-category="brindes" data-catalog-name="Uniformes e camisetas" data-catalog-service="Brindes e personalizados" aria-labelledby="catalog-uniformes-title">
-        <div class="catalog-visual"><span class="catalog-category">Brindes e personalizados</span><svg viewBox="0 0 110 110" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M35 18l20 7 20-7 25 20-14 17-13-8v46H37V47l-13 8-14-17z"/><path d="M43 21l12 17 12-17M55 38v15M48 63h15"/></svg><span class="catalog-visual-mark" aria-hidden="true">↗</span></div>
+        <div class="catalog-visual catalog-visual-photo"><img src="assets/uniformes-e-camisetas-conexao-k.webp" width="1200" height="745" alt="Polo, jaleco, camiseta e avental personalizados da Conexão K." loading="lazy"></div>
         <div class="catalog-card-copy"><h3 id="catalog-uniformes-title">Uniformes e camisetas</h3><p>Peças personalizadas para equipes, campanhas e eventos com unidade visual.</p><span class="catalog-tags">Polos · Camisetas · Uniformes</span><button type="button" class="text-link catalog-add" data-catalog-add aria-label="Incluir Uniformes e camisetas no orçamento"><span class="catalog-add-text">Incluir no orçamento</span><span aria-hidden="true">↗</span></button></div>
       </article>
     </div>
@@ -115,12 +183,30 @@
     </div>
     <div class="portfolio-note"><span>Registros reais do portfólio XK Eventos 2026.</span><span>Clique em um projeto para explorar a galeria. ↗</span></div>
   </section></div>
-  <section class="culture-band" aria-labelledby="culture-title"><div class="wrap culture-inner"><div><p class="eyebrow">Nossa origem também é nossa força.</p><h2 id="culture-title">DNA nordestino.<br>Alcance <span>nacional.</span></h2></div><div class="culture-copy"><p>Da energia do São João aos encontros corporativos, unimos produção, cultura e estratégia para criar experiências com identidade.</p><button class="button button-outline-light" id="junino-open">Explore nossa frente junina <span aria-hidden="true">↗</span></button></div><span class="culture-star" aria-hidden="true">✳</span></div></section>
+  <section class="culture-band" id="dna-nordestino" aria-labelledby="culture-title">
+    <h2 id="culture-title" class="sr-only">DNA nordestino. Alcance nacional.</h2>
+    <img class="culture-banner" src="assets/dna-nordestino-alcance-nacional.webp" width="2048" height="682" alt="Nossa origem também é nossa força. Ilustração com sombrinha de frevo, sanfona, cactos e mapa do Brasil." loading="lazy" decoding="async">
+    <div class="wrap culture-banner-action"><button class="button button-outline-light" id="junino-open">Explore nossa frente junina <span aria-hidden="true">↗</span></button></div>
+  </section>
   <section class="brands-band" id="marcas" aria-labelledby="brands-title">
     <div class="wrap brands-heading"><h2 id="brands-title"><span class="brands-title-bold">Marcas</span> que confiam na nossa <span class="brands-title-bold">entrega.</span></h2></div>
     <div class="brands-marquee" aria-label="Marcas atendidas"><div class="brands-track"><ul class="brands-group"><li class="brand-item"><svg class="brand-art" viewBox="140 87 228 98" role="img" aria-label="Ambev" focusable="false"><image href="assets/marcas-xk-alta.jpg" width="1203" height="1080" /></svg></li><li class="brand-item"><svg class="brand-art" viewBox="494 395 194 101" role="img" aria-label="BRF" focusable="false"><image href="assets/marcas-xk-alta.jpg" width="1203" height="1080" /></svg></li><li class="brand-item"><svg class="brand-art" viewBox="116 257 275 64" role="img" aria-label="Brisanet" focusable="false"><image href="assets/marcas-xk-alta.jpg" width="1203" height="1080" /></svg></li><li class="brand-item"><svg class="brand-art" viewBox="457 532 289 66" role="img" aria-label="Carrefour" focusable="false"><image href="assets/marcas-xk-alta.jpg" width="1203" height="1080" /></svg></li><li class="brand-item"><svg class="brand-art" viewBox="118 376 273 75" role="img" aria-label="Heineken" focusable="false"><image href="assets/marcas-xk-alta.jpg" width="1203" height="1080" /></svg></li><li class="brand-item"><svg class="brand-art" viewBox="475 651 194 87" role="img" aria-label="Jeep" focusable="false"><image href="assets/marcas-xk-alta.jpg" width="1203" height="1080" /></svg></li><li class="brand-item"><svg class="brand-art" viewBox="174 506 187 96" role="img" aria-label="Maggi" focusable="false"><image href="assets/marcas-xk-alta.jpg" width="1203" height="1080" /></svg></li><li class="brand-item"><svg class="brand-art" viewBox="467 768 242 105" role="img" aria-label="M. Dias Branco" focusable="false"><image href="assets/marcas-xk-alta.jpg" width="1203" height="1080" /></svg></li><li class="brand-item"><svg class="brand-art" viewBox="138 637 247 101" role="img" aria-label="Pernod Ricard" focusable="false"><image href="assets/marcas-xk-alta.jpg" width="1203" height="1080" /></svg></li><li class="brand-item"><svg class="brand-art" viewBox="848 117 172 84" role="img" aria-label="P&amp;G" focusable="false"><image href="assets/marcas-xk-alta.jpg" width="1203" height="1080" /></svg></li><li class="brand-item"><svg class="brand-art" viewBox="168 777 199 95" role="img" aria-label="Pitú" focusable="false"><image href="assets/marcas-xk-alta.jpg" width="1203" height="1080" /></svg></li><li class="brand-item"><svg class="brand-art" viewBox="852 267 131 104" role="img" aria-label="São Braz" focusable="false"><image href="assets/marcas-xk-alta.jpg" width="1203" height="1080" /></svg></li><li class="brand-item"><svg class="brand-art" viewBox="491 119 220 70" role="img" aria-label="TIM" focusable="false"><image href="assets/marcas-xk-alta.jpg" width="1203" height="1080" /></svg></li><li class="brand-item"><svg class="brand-art" viewBox="824 425 191 86" role="img" aria-label="Tintas Frevo" focusable="false"><image href="assets/marcas-xk-alta.jpg" width="1203" height="1080" /></svg></li><li class="brand-item"><svg class="brand-art" viewBox="529 235 121 132" role="img" aria-label="Unilever" focusable="false"><image href="assets/marcas-xk-alta.jpg" width="1203" height="1080" /></svg></li><li class="brand-item"><svg class="brand-art" viewBox="853 553 146 130" role="img" aria-label="Ypê" focusable="false"><image href="assets/marcas-xk-alta.jpg" width="1203" height="1080" /></svg></li></ul></div></div>
   </section>
-  <div class="section-tone tone-process"><section class="section wrap process" aria-labelledby="process-title"><div class="section-heading"><div><p class="eyebrow"><span class="section-index">05 /</span> Da ideia à entrega</p><h2 id="process-title">Um parceiro.<br><span class="blue">Cada etapa.</span></h2></div><p>O seu objetivo orienta o projeto.<br>A nossa equipe conecta as entregas.</p></div><div class="process-grid"><div><span>01 — Entender</span><h3>Começa pela sua ideia.</h3><p>Objetivos, público, contexto e expectativas para definir a direção.</p></div><div><span>02 — Criar</span><h3>Uma solução sob medida.</h3><p>Conceito, comunicação e planejamento alinhados à sua marca.</p></div><div><span>03 — Realizar</span><h3>Precisão em campo.</h3><p>Operação, estrutura e acompanhamento para tirar o projeto do papel.</p></div></div></section></div>
+  <div class="section-tone tone-process">
+    <video class="process-motion" autoplay loop muted playsinline preload="metadata" poster="assets/conexaok-motion-poster.jpg" aria-hidden="true" disablepictureinpicture><source src="assets/conexaok-motion.mp4" type="video/mp4"></video>
+    <section class="section wrap process process-redesign" id="processo" aria-labelledby="process-title">
+      <div class="process-heading"><div><p class="eyebrow"><span class="section-index">05 /</span> Da ideia à entrega</p><h2 id="process-title">Você imagina.<br><span class="blue">A gente faz acontecer.</span></h2></div><p class="process-promise">Uma ideia que ganha vida.<span aria-hidden="true">*</span></p></div>
+      <div class="process-story">
+        <svg class="process-connector" viewBox="0 0 1200 240" preserveAspectRatio="none" aria-hidden="true"><path d="M-70 150C40 35 125 205 260 135S430 65 530 125S735 205 812 76C866 -22 745 -10 787 112S1005 178 1270 93"/></svg>
+        <ol class="process-steps">
+          <li><div class="process-visual" aria-hidden="true"><svg class="process-bubbles" viewBox="0 0 340 240" fill="none"><path d="M94 31h66c37 0 60 23 60 57s-24 57-61 57h-46l-42 34v-36c-27-6-45-25-45-55 0-34 25-57 68-57Z"/><path class="process-bubble-front" d="M190 87h55c42 0 69 23 69 60 0 30-17 50-43 58v30l-43-30h-38c-42 0-68-23-68-59s26-59 68-59Z"/><circle cx="173" cy="141" r="9"/></svg></div><p class="process-phase">01 — Entender</p><h3>Sua ideia é o começo.</h3><p class="process-description">Ouvimos sua ideia e entendemos seu objetivo.</p></li>
+          <li><div class="process-visual" aria-hidden="true"><svg class="process-asterisk" viewBox="0 0 240 240"><defs><linearGradient id="process-star-blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3434ff"/><stop offset=".5" stop-color="#2020eb"/><stop offset="1" stop-color="#0b078c"/></linearGradient></defs><path d="M99 6h42v64l46-46 30 30-46 45h63v42h-63l46 46-30 30-46-46v63H99v-63l-45 46-30-30 46-46H6V99h64L24 54l30-30 45 46Z" fill="url(#process-star-blue)"/><path d="m120 120 21-50V6l-21 85-66-67 42 73-90 2 86 21-68 67 82-42-7 89 21-83 67 66-44-76h91l-84-21 67-66-78 43Z" fill="#1308b1" opacity=".32"/></svg></div><p class="process-phase">02 — Criar</p><h3>Criatividade com direção.</h3><p class="process-description">Damos forma a uma solução com a sua identidade.</p></li>
+          <li><div class="process-visual"><svg class="process-event" viewBox="1250 245 505 330" role="img" aria-label="Palco e plateia de uma convenção, representando a realização de eventos"><defs><clipPath id="process-event-clip"><path d="M1660 254C1728 251 1751 286 1743 348C1735 413 1718 478 1670 526C1632 564 1591 572 1540 558L1370 511C1298 493 1262 467 1263 418C1261 363 1300 333 1356 316L1528 278C1572 266 1618 251 1660 254Z"/></clipPath></defs><image href="assets/processo-referencia.png" width="1860" height="846" clip-path="url(#process-event-clip)"/></svg></div><p class="process-phase">03 — Realizar</p><h3>É hora de acontecer.</h3><p class="process-description">Cuidamos de cada detalhe para tirar o projeto do papel.</p></li>
+        </ol>
+      </div>
+      <a class="process-closing" href="#orcamento"><span>Tudo conectado. Do primeiro papo à última entrega.</span><span class="process-closing-arrow" aria-hidden="true">→</span></a>
+    </section>
+  </div>
   <section class="briefing-section" id="orcamento" aria-labelledby="briefing-title"><div class="wrap briefing-layout"><div class="briefing-intro"><p class="eyebrow"><span class="section-index">06 /</span> Seu próximo projeto</p><h2 id="briefing-title">Grandes encontros<br>começam com<br><span class="blue">uma conversa.</span></h2><p>Conte o que você imagina. Organize as informações do seu evento e prepare um briefing para solicitar uma proposta personalizada.</p><div class="local-note"><span aria-hidden="true">↗</span><p><strong>Você prepara. Você decide.</strong><br>Ao concluir, você poderá copiar ou baixar o briefing. Nenhuma informação será enviada.</p></div><div class="draft-actions"><button class="text-link" type="button" id="save-draft">Salvar rascunho neste navegador ↓</button><button class="text-link" type="button" id="load-draft" hidden>Recuperar rascunho ↗</button><button class="muted-link" type="button" id="delete-draft" hidden>Excluir rascunho salvo</button></div></div>
     <div class="briefing-panel"><ol class="form-steps" aria-label="Etapas do briefing"><li class="current" data-step-label="1" aria-current="step"><span>01</span> Projeto</li><li data-step-label="2"><span>02</span> Detalhes</li><li data-step-label="3"><span>03</span> Revisão</li></ol>
     <form id="briefing-form" novalidate>
@@ -129,7 +215,7 @@
         <label class="field">Nome ou tipo do projeto <span class="required">*</span><input name="project" id="field-project" required maxlength="160" placeholder="Ex.: convenção, lançamento, ativação..."></label><div class="form-row"><label class="field">Cidade / UF <span class="required">*</span><input name="city" id="field-city" required maxlength="100" placeholder="Ex.: Recife / PE"></label><label class="field">Data prevista <input name="date" type="date" aria-label="Data prevista, opcional"><small>Pode definir depois.</small></label></div><div id="project-references" class="reference-list" hidden><span>Referências do portfólio</span><div id="reference-chips"></div></div><p class="form-error" id="step-1-error" role="alert" hidden></p><div class="form-actions"><span class="required-hint">* Campos obrigatórios</span><button type="button" class="button button-dark" data-next="2">Continuar <span aria-hidden="true">→</span></button></div>
       </section>
       <section class="form-step" data-step="2" aria-labelledby="form-step-2" hidden><p class="form-kicker">Passo 02 de 03</p><h3 id="form-step-2" tabindex="-1">Vamos dar forma à ideia.</h3><div class="form-row"><label class="field">Seu nome <span class="required">*</span><input name="name" id="field-name" autocomplete="name" required maxlength="100" placeholder="Como podemos chamar você?"></label><label class="field">Empresa<input name="company" autocomplete="organization" maxlength="150" placeholder="Nome da sua empresa"></label></div><div class="form-row"><label class="field">E-mail<input name="email" id="field-email" type="email" autocomplete="email" maxlength="180" placeholder="voce@empresa.com.br"></label><label class="field">Telefone<input name="phone" id="field-phone" type="tel" autocomplete="tel" maxlength="25" placeholder="(81) 99999-9999"></label></div><div class="form-row"><label class="field">Público estimado<input name="guests" type="number" min="1" max="10000000" placeholder="Número de pessoas"></label><label class="field">Investimento previsto<select name="budget"><option value="A definir">A definir</option><option>Até R$ 10 mil</option><option>R$ 10 mil a R$ 30 mil</option><option>R$ 30 mil a R$ 80 mil</option><option>Acima de R$ 80 mil</option></select></label></div><label class="field">Conte um pouco mais<textarea name="details" rows="3" maxlength="3000" placeholder="Objetivo, público, referências e o que não pode faltar."></textarea></label><p class="form-error" id="step-2-error" role="alert" hidden></p><p class="form-privacy">Contato opcional. Esses dados entram apenas no seu briefing, sem envio automático.</p><div class="form-actions"><button type="button" class="text-link" data-back="1">← Voltar</button><button type="submit" class="button button-lime">Revisar briefing <span aria-hidden="true">→</span></button></div></section>
-      <section class="form-step" data-step="3" aria-labelledby="form-step-3" hidden><p class="form-kicker">Passo 03 de 03</p><h3 id="form-step-3" tabindex="-1">Seu projeto começa aqui.</h3><p class="review-note"><span aria-hidden="true">✓</span> Briefing preparado. Nenhum dado foi enviado.</p><dl id="briefing-summary" class="briefing-summary"></dl><div class="review-actions"><button type="button" class="button button-dark" id="copy-briefing">Copiar briefing <span aria-hidden="true">↗</span></button><button type="button" class="button button-outline" id="download-briefing">Baixar .txt <span aria-hidden="true">↓</span></button></div><p class="copy-status" id="copy-status" role="status"></p><div class="form-actions review-bottom"><button type="button" class="text-link" data-back="2">← Editar informações</button><button type="button" class="muted-link" id="reset-briefing">Novo briefing</button></div><div id="copy-fallback" hidden><label class="field">Selecione e copie o texto abaixo<textarea id="copy-fallback-text" rows="8" readonly></textarea></label></div></section>
+      <section class="form-step" data-step="3" aria-labelledby="form-step-3" hidden><p class="form-kicker">Passo 03 de 03</p><h3 id="form-step-3" tabindex="-1">Seu projeto começa aqui.</h3><p class="review-note"><span aria-hidden="true">✓</span> Briefing preparado. Nenhum dado foi enviado.</p><dl id="briefing-summary" class="briefing-summary"></dl><div class="review-actions"><button type="button" class="button button-dark" id="copy-briefing">Copiar briefing <span aria-hidden="true">↗</span></button><button type="button" class="button button-lime" id="download-briefing-pdf">Baixar PDF <span aria-hidden="true">↓</span></button><button type="button" class="button button-outline" id="download-briefing">Baixar .txt <span aria-hidden="true">↓</span></button></div><p class="copy-status" id="copy-status" role="status"></p><div class="form-actions review-bottom"><button type="button" class="text-link" data-back="2">← Editar informações</button><button type="button" class="muted-link" id="reset-briefing">Novo briefing</button></div><div id="copy-fallback" hidden><label class="field">Selecione e copie o texto abaixo<textarea id="copy-fallback-text" rows="8" readonly></textarea></label></div></section>
     </form>
     </div>
   </div></section>
@@ -137,7 +223,94 @@
 </main>
 <footer class="footer"><div class="wrap footer-main"><a href="#inicio" aria-label="XK Eventos, voltar ao início"><img src="assets/logo.png" alt="XK Eventos" width="112" height="72" loading="lazy"></a><p>Ideias. Experiências.<br><strong>Conexões que ficam.</strong></p><a href="#inicio" class="footer-top">Voltar ao topo <span aria-hidden="true">↑</span></a></div><div class="wrap footer-bottom"><span>© <span id="year">2026</span> XK Eventos.</span><span>Paulista, Pernambuco · Atuação nacional</span><span>Portfólio 2026</span></div></footer>
 <dialog id="project-dialog" aria-labelledby="dialog-title"><div class="dialog-top"><span class="eyebrow">XK / Portfólio selecionado</span><button class="icon-button" type="button" id="close-project" aria-label="Fechar projeto">×</button></div><div class="dialog-layout"><div class="gallery"><div class="gallery-image-wrap"><img id="gallery-image" src="assets/seara-1.webp" alt=""><button class="gallery-prev icon-button" id="gallery-prev" type="button" aria-label="Fotografia anterior">←</button><button class="gallery-next icon-button" id="gallery-next" type="button" aria-label="Próxima fotografia">→</button><span id="gallery-count" aria-live="polite">1 / 3</span></div><div class="gallery-thumbs" id="gallery-thumbs" role="group" aria-label="Selecionar fotografia"></div></div><div class="dialog-copy"><p id="dialog-category" class="eyebrow blue"></p><h2 id="dialog-title"></h2><p id="dialog-description"></p><dl class="project-facts"><div><dt>Frente de atuação</dt><dd id="dialog-scope"></dd></div><div><dt>Registro</dt><dd>Portfólio XK Eventos 2026</dd></div></dl><button class="button button-lime" id="add-project-reference" type="button">Usar como referência <span aria-hidden="true">↗</span></button><a class="text-link" href="assets/portfolio-xk-2026.pdf" download="Portfolio-XK-Eventos-2026.pdf">Baixar portfólio completo ↓</a></div></div></dialog>
+<dialog id="rental-dialog" aria-labelledby="rental-title">
+  <div class="dialog-top"><span class="eyebrow">XK / Locação para eventos</span><button type="button" class="icon-button" id="close-rental" aria-label="Fechar catálogo de locação">×</button></div>
+  <div class="rental-content">
+    <h2 id="rental-title">Catálogo de locação</h2>
+    <p>Escolha o que seu evento precisa e leve os itens para o orçamento. Disponibilidade e quantidades são confirmadas na proposta.</p>
+    <div class="rental-filter"><label for="rental-category">Categoria</label> <select id="rental-category"><option value="">Todas</option><option>Audiovisual</option><option>Interatividade</option><option>Mobiliário</option><option>Estruturas</option><option>Climatização</option></select></div>
+    <div class="rental-grid">
+      <article class="rental-card" data-rental-item="tv" data-rental-category="Audiovisual">
+        <div class="rental-visual"><img src="assets/refletor-led-neon-lime.webp" width="1536" height="1024" alt="Refletor LED com luz verde-lima sobre fundo azul" loading="lazy"><div class="rental-caption rental-caption-overlay"><h3>PAR LED</h3></div></div>
+        <div class="rental-copy"><button type="button" class="button button-small button-dark" data-rental-add aria-pressed="false">Adicionar ao orçamento</button></div>
+      </article>
+      <article class="rental-card" data-rental-item="led" data-rental-category="Audiovisual">
+        <div class="rental-visual"><img src="assets/catalogo-totem-led.webp" width="1067" height="662" alt="Totem de LED visto de frente e de trás" loading="lazy"><div class="rental-caption rental-caption-overlay"><h3>TOTEM DE LED</h3></div></div>
+        <div class="rental-copy"><button type="button" class="button button-small button-dark" data-rental-add aria-pressed="false">Adicionar ao orçamento</button></div>
+      </article>
+      <article class="rental-card" data-rental-item="televisao" data-rental-category="Audiovisual">
+        <div class="rental-visual"><img src="assets/catalogo-televisao.webp" width="997" height="627" alt="TV sobre piso azul" loading="lazy"><div class="rental-caption rental-caption-overlay"><h3>TV</h3></div></div>
+        <div class="rental-copy"><button type="button" class="button button-small button-dark" data-rental-add aria-pressed="false">Adicionar ao orçamento</button></div>
+      </article>
+      <article class="rental-card" data-rental-item="climatizador" data-rental-category="Climatização">
+        <div class="rental-visual"><img src="assets/catalogo-climatizador.webp" width="920" height="576" alt="Climatizador de ar Ventisol" loading="lazy"><div class="rental-caption rental-caption-overlay"><h3>CLIMATIZADOR DE AR</h3></div></div>
+        <div class="rental-copy"><button type="button" class="button button-small button-dark" data-rental-add aria-pressed="false">Adicionar ao orçamento</button></div>
+      </article>
+      <article class="rental-card" data-rental-item="fotos" data-rental-category="Interatividade">
+        <div class="rental-visual"><img src="assets/catalogo-maquina-fotos.webp" width="920" height="568" alt="Máquinas de fotos verde, azul e branca" loading="lazy"><div class="rental-caption rental-caption-overlay"><h3>MÁQUINA DE FOTOS</h3></div></div>
+        <div class="rental-copy"><button type="button" class="button button-small button-dark" data-rental-add aria-pressed="false">Adicionar ao orçamento</button></div>
+      </article>
+      <article class="rental-card" data-rental-item="frigobar" data-rental-category="Mobiliário">
+        <div class="rental-visual"><img src="assets/catalogo-frigobar.webp" width="835" height="517" alt="Frigobar aberto com alimentos e bebidas" loading="lazy"><div class="rental-caption rental-caption-overlay"><h3>FRIGOBAR</h3></div></div>
+        <div class="rental-copy"><button type="button" class="button button-small button-dark" data-rental-add aria-pressed="false">Adicionar ao orçamento</button></div>
+      </article>
+      <article class="rental-card" data-rental-item="som-luz" data-rental-category="Audiovisual">
+        <div class="rental-visual"><img src="assets/catalogo-som.webp" width="1005" height="628" alt="Dois conjuntos de caixas de som line array" loading="lazy"><div class="rental-caption rental-caption-overlay"><h3>SOM</h3></div></div>
+        <div class="rental-copy"><button type="button" class="button button-small button-dark" data-rental-add aria-pressed="false">Adicionar ao orçamento</button></div>
+      </article>
+      <article class="rental-card" data-rental-item="moving-head" data-rental-category="Audiovisual">
+        <div class="rental-visual"><img src="assets/catalogo-moving-head.webp" width="1005" height="627" alt="Dois refletores móveis de palco com lentes roxas" loading="lazy"><div class="rental-caption rental-caption-overlay"><h3>MOVING HEAD BEAM</h3></div></div>
+        <div class="rental-copy"><button type="button" class="button button-small button-dark" data-rental-add aria-pressed="false">Adicionar ao orçamento</button></div>
+      </article>
+      <article class="rental-card" data-rental-item="grid" data-rental-category="Estruturas">
+        <div class="rental-visual"><img src="assets/catalogo-grid.webp" width="1003" height="627" alt="Estrutura de grid em treliça de alumínio" loading="lazy"><div class="rental-caption rental-caption-overlay"><h3>ESTRUTURA DE GRID</h3></div></div>
+        <div class="rental-copy"><button type="button" class="button button-small button-dark" data-rental-add aria-pressed="false">Adicionar ao orçamento</button></div>
+      </article>
+      <article class="rental-card" data-rental-item="sofa" data-rental-category="Mobiliário">
+        <div class="rental-visual"><img src="assets/catalogo-sofa.webp" width="983" height="615" alt="Sofá branco de dois lugares" loading="lazy"><div class="rental-caption rental-caption-overlay"><h3>SOFÁ</h3></div></div>
+        <div class="rental-copy"><button type="button" class="button button-small button-dark" data-rental-add aria-pressed="false">Adicionar ao orçamento</button></div>
+      </article>
+      <article class="rental-card" data-rental-item="painel-led" data-rental-category="Audiovisual">
+        <div class="rental-visual"><img src="assets/catalogo-painel-led.webp" width="983" height="618" alt="Painel de LED exibindo o logotipo da XK Eventos" loading="lazy"><div class="rental-caption rental-caption-overlay"><h3>PAINEL DE LED</h3></div></div>
+        <div class="rental-copy"><button type="button" class="button button-small button-dark" data-rental-add aria-pressed="false">Adicionar ao orçamento</button></div>
+      </article>
+      <article class="rental-card" data-rental-item="radio-comunicador" data-rental-category="Audiovisual">
+        <div class="rental-visual"><img src="assets/catalogo-radio.webp" width="982" height="615" alt="Dois rádios comunicadores pretos" loading="lazy"><div class="rental-caption rental-caption-overlay"><h3>RÁDIO COMUNICADOR</h3></div></div>
+        <div class="rental-copy"><button type="button" class="button button-small button-dark" data-rental-add aria-pressed="false">Adicionar ao orçamento</button></div>
+      </article>
+      <article class="rental-card" data-rental-item="carregador-celular" data-rental-category="Interatividade">
+        <div class="rental-visual"><img src="assets/catalogo-carregador.webp" width="980" height="615" alt="Três totens de carregamento para celular" loading="lazy"><div class="rental-caption rental-caption-overlay"><h3>CARREGADOR DE CELULAR</h3></div></div>
+        <div class="rental-copy"><button type="button" class="button button-small button-dark" data-rental-add aria-pressed="false">Adicionar ao orçamento</button></div>
+      </article>
+      <article class="rental-card" data-rental-item="mesas-cadeiras" data-rental-category="Mobiliário">
+        <div class="rental-visual"><div class="rental-caption"><p class="eyebrow blue">Mobiliário</p><h3>Mesas e cadeiras</h3><p>Para recepção, convidados e áreas de apoio.</p></div></div>
+        <div class="rental-copy"><button type="button" class="button button-small button-dark" data-rental-add aria-pressed="false">Adicionar ao orçamento</button></div>
+      </article>
+      <article class="rental-card" data-rental-item="tendas" data-rental-category="Estruturas">
+        <div class="rental-visual"><div class="rental-caption"><p class="eyebrow blue">Estruturas</p><h3>Tendas</h3><p>Cobertura para áreas externas e espaços de atendimento.</p></div></div>
+        <div class="rental-copy"><button type="button" class="button button-small button-dark" data-rental-add aria-pressed="false">Adicionar ao orçamento</button></div>
+      </article>
+    </div>
+  </div>
+  <div class="rental-footer"><span id="rental-count" role="status">0 itens selecionados</span><button type="button" class="button button-lime" id="rental-briefing" disabled>Ir para o orçamento ↗</button></div>
+</dialog>
 <dialog id="culture-dialog" aria-labelledby="culture-dialog-title"><div class="dialog-top"><span class="eyebrow">XK / Cultura & experiência</span><button class="icon-button" type="button" id="close-culture" aria-label="Fechar frente junina">×</button></div><div class="culture-dialog-content"><p class="eyebrow blue">São João</p><h2 id="culture-dialog-title">Produção com<br>identidade nordestina.</h2><p>Projetos juninos que conectam cultura, estratégia comercial e execução. O portfólio apresenta atuação nos festejos de Bananeiras, Igarassu, Caruaru, Sapé, Campina Grande, Santa Cruz do Capibaribe e no Camarote no Alto do Moura.</p><img src="assets/portfolio-16.webp" width="1920" height="1080" alt="Página original do portfólio sobre produção e experiência em projetos de São João" loading="lazy"><button class="button button-lime" type="button" id="culture-briefing">Planejar um projeto cultural ↗</button></div></dialog>
+<aside class="welcome-chat" aria-label="Atendimento com Cristina">
+  <button class="button button-lime welcome-chat-toggle" type="button" aria-expanded="false" aria-controls="welcome-chat-panel" hidden>Fale com Cristina <span aria-hidden="true">↗</span></button>
+  <div class="welcome-chat-panel" id="welcome-chat-panel" hidden>
+    <div class="welcome-chat-header">
+      <p class="eyebrow">XK / Atendimento</p>
+      <button class="icon-button" type="button" aria-label="Minimizar atendimento">×</button>
+    </div>
+    <h2>Olá! Como posso ajudar?</h2>
+    <p>Sou Cristina, do atendimento da XK Eventos.</p>
+    <form class="welcome-chat-form">
+      <label for="welcome-chat-message">Sua mensagem</label>
+      <textarea id="welcome-chat-message" rows="2" maxlength="1500" placeholder="Conte o que você precisa..." required></textarea>
+      <button class="button button-lime" type="submit">Continuar no WhatsApp <span aria-hidden="true">↗</span></button>
+    </form>
+  </div>
+</aside>
 <div id="toast" class="toast" role="status" hidden></div>
 <noscript><div class="no-script">Ative o JavaScript para filtrar os projetos e preparar seu briefing. Você também pode baixar o portfólio completo pelos links da página.</div></noscript>
 </body>

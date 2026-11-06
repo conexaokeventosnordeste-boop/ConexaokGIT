@@ -93,12 +93,20 @@
   const form = $('#briefing-form');
   const dialog = $('#project-dialog');
   const cultureDialog = $('#culture-dialog');
+  const rentalDialog = $('#rental-dialog');
+  const rentalCards = $$('[data-rental-item]', rentalDialog);
   const refs = new Set();
   const catalogItems = new Map($$('[data-catalog-item]').map(card => [card.dataset.catalogItem, {
     name: card.dataset.catalogName,
     service: card.dataset.catalogService,
     card
   }]));
+  rentalCards.forEach(card => {
+    const id = card.dataset.rentalItem;
+    if (!catalogItems.has(id)) {
+      catalogItems.set(id, { name: $('h3', card).textContent, service: 'Locação de equipamentos', card: null });
+    }
+  });
   const selectedCatalog = new Set();
   let activeProject = 'seara';
   let imageIndex = 0;
@@ -199,7 +207,7 @@
     if (event.key === 'ArrowLeft') { event.preventDefault(); $('#gallery-prev').click(); }
     if (event.key === 'ArrowRight') { event.preventDefault(); $('#gallery-next').click(); }
   });
-  [dialog, cultureDialog].forEach(element => {
+  [dialog, cultureDialog, rentalDialog].forEach(element => {
     element.addEventListener('close', () => document.body.classList.remove('modal-open'));
     element.addEventListener('click', event => {
       if (event.target !== element) return;
@@ -208,6 +216,31 @@
     });
   });
   $('#junino-open').addEventListener('click', () => { cultureDialog.showModal(); document.body.classList.add('modal-open'); });
+  $$('[data-rental-open]').forEach(button => button.addEventListener('click', () => {
+    if (menuOpen) { setMenu(false); $('#menu-toggle').focus(); }
+    rentalDialog.showModal();
+    document.body.classList.add('modal-open');
+  }));
+  $('#close-rental').addEventListener('click', () => rentalDialog.close());
+  $('#rental-category').addEventListener('change', event => {
+    const category = event.target.value;
+    rentalCards.forEach(card => { card.hidden = !!category && card.dataset.rentalCategory !== category; });
+  });
+  $('#rental-briefing').addEventListener('click', () => {
+    rentalDialog.close();
+    document.body.classList.remove('modal-open');
+    goToBriefing();
+    $('#form-step-1').focus({preventScroll: true});
+  });
+  rentalCards.forEach(card => $('[data-rental-add]', card).addEventListener('click', () => {
+    const id = card.dataset.rentalItem;
+    if (selectedCatalog.has(id)) selectedCatalog.delete(id);
+    else {
+      selectedCatalog.add(id);
+      selectService(catalogItems.get(id).service);
+    }
+    updateCatalogSelection();
+  }));
   $('#close-culture').addEventListener('click', () => cultureDialog.close());
   $('#culture-briefing').addEventListener('click', () => {
     selectService('Eventos, shows e projetos culturais');
@@ -241,6 +274,7 @@
     });
     let count = 0;
     catalogItems.forEach(item => {
+      if (!item.card) return;
       item.card.hidden = category !== 'todos' && item.card.dataset.catalogCategory !== category;
       if (!item.card.hidden) count++;
     });
@@ -252,12 +286,23 @@
     container.replaceChildren();
     $('#catalog-selection').hidden = selectedCatalog.size === 0;
     catalogItems.forEach((item, id) => {
+      if (!item.card) return;
       const selected = selectedCatalog.has(id);
       const button = $('[data-catalog-add]', item.card);
       button.dataset.selected = String(selected);
       button.setAttribute('aria-label', (selected ? 'Ver ' : 'Incluir ') + item.name + ' no orçamento');
       $('.catalog-add-text', button).textContent = selected ? 'No seu orçamento ✓' : 'Incluir no orçamento';
     });
+    let rentalCount = 0;
+    rentalCards.forEach(card => {
+      const selected = selectedCatalog.has(card.dataset.rentalItem);
+      const button = $('[data-rental-add]', card);
+      button.setAttribute('aria-pressed', String(selected));
+      button.textContent = selected ? 'Selecionado ✓' : 'Adicionar ao orçamento';
+      if (selected) rentalCount++;
+    });
+    $('#rental-count').textContent = rentalCount + (rentalCount === 1 ? ' item selecionado' : ' itens selecionados');
+    $('#rental-briefing').disabled = rentalCount === 0;
     selectedCatalog.forEach(id => {
       const item = catalogItems.get(id);
       const chip = document.createElement('span');
@@ -446,17 +491,34 @@
     $('#copy-fallback').hidden = copied;
     if (!copied) { $('#copy-fallback-text').value = text; $('#copy-fallback-text').focus(); $('#copy-fallback-text').select(); }
   });
-  $('#download-briefing').addEventListener('click', () => {
-    const blob = new Blob(['\uFEFF' + briefingText()], { type: 'text/plain;charset=utf-8' });
+  function downloadBriefing(blob, filename) {
     const objectUrl = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
     anchor.href = objectUrl;
-    anchor.download = 'briefing-xk-eventos.txt';
+    anchor.download = filename;
     document.body.append(anchor);
     anchor.click();
     anchor.remove();
     setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
     $('#copy-status').textContent = 'Briefing preparado para download. Nenhum dado foi enviado.';
+  }
+  $('#download-briefing').addEventListener('click', () => {
+    const blob = new Blob(['\uFEFF' + briefingText()], { type: 'text/plain;charset=utf-8' });
+    downloadBriefing(blob, 'briefing-xk-eventos.txt');
+  });
+  $('#download-briefing-pdf').addEventListener('click', async event => {
+    const button = event.currentTarget;
+    const status = $('#copy-status');
+    button.disabled = true;
+    status.textContent = 'Preparando o PDF…';
+    try {
+      const bytes = await window.createBriefingPdf(summaryRows());
+      downloadBriefing(new Blob([bytes], { type: 'application/pdf' }), 'briefing-xk-eventos.pdf');
+    } catch (_) {
+      status.textContent = 'Não foi possível gerar o PDF. Tente novamente ou use Baixar .txt.';
+    } finally {
+      button.disabled = false;
+    }
   });
   function hasDraft() { try { return Boolean(localStorage.getItem(STORAGE_KEY)); } catch (_) { return false; } }
   function updateDraftButtons() {
@@ -520,4 +582,27 @@
   }));
   $('#year').textContent = new Date().getFullYear();
   updateDraftButtons();
+})();
+
+(() => {
+  const video = document.querySelector('.about-motion');
+  const toggle = document.querySelector('.about-motion-toggle');
+  if (!video) return;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  let pausedByUser = false;
+  let visible = false;
+  const sync = () => {
+    video.classList.toggle('is-paused', reduced.matches || pausedByUser || !visible || document.hidden);
+  };
+  toggle?.addEventListener('click', () => {
+    pausedByUser = !pausedByUser;
+    const label = pausedByUser ? 'Retomar animação' : 'Pausar animação';
+    toggle.textContent = label;
+    toggle.setAttribute('aria-label', label + ' de fundo');
+    sync();
+  });
+  new IntersectionObserver(entries => { visible = entries[0].isIntersecting; sync(); }).observe(video.parentElement);
+  reduced.addEventListener('change', sync);
+  document.addEventListener('visibilitychange', sync);
+  sync();
 })();
