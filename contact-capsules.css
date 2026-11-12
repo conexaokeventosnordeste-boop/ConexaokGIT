@@ -1,0 +1,18 @@
+/* Scoped to the contact information; company image and other sections retained. */
+#contato .contact-capsules{min-width:0}
+#contato .capsule-stack{margin-top:32px;max-width:100%;width:100%;padding:8px 14px 8px 0}
+#contato .capsule-row{display:flex;align-items:stretch;gap:0;position:relative;animation:capsule-drift 7s ease-in-out infinite;animation-delay:calc(var(--row,0)*-.65s)}
+#contato .capsule-row:nth-child(2){--row:1}#contato .capsule-row:nth-child(3){--row:2}#contato .capsule-row:nth-child(4){--row:3}#contato .capsule-row:nth-child(5){--row:4}#contato .capsule-row:nth-child(6){--row:5}#contato .capsule-row:nth-child(7){--row:6}
+#contato .capsule{display:flex;align-items:center;justify-content:center;gap:12px;border:1.5px solid #14141b;border-radius:999px;background:#fff;color:#14141b;padding:15px 22px;min-height:58px;font-size:clamp(13px,1.25vw,18px);font-weight:700;line-height:1.25;text-align:center;text-decoration:none;flex:1 1 auto;min-width:0;overflow-wrap:anywhere}
+#contato .capsule-blue{background:var(--blue);color:#fff}#contato .capsule-lime{background:var(--lime)}#contato .capsule-gray{background:#dedee2}
+#contato .capsule-brand{flex:1 1 100%;margin-left:0;font-size:clamp(17px,1.6vw,24px)}
+#contato .capsule-round{flex:0 0 58px;width:58px;padding:10px;font-size:29px}
+#contato .capsule-wide{width:100%}#contato .capsule-address{font-size:14px;line-height:1.5}
+#contato .capsule-stack:hover .capsule-row,#contato .capsule-stack:focus-within .capsule-row{animation-play-state:paused}
+#contato a.capsule:hover{filter:brightness(.93)}#contato a.capsule:focus-visible{outline:3px solid #fff;outline-offset:3px;z-index:2}
+@keyframes capsule-drift{0%,100%{transform:translateX(0)}50%{transform:translateX(12px)}}
+@media(max-width:700px){#contato .capsule-stack{max-width:100%;margin-top:24px}#contato .capsule{padding:12px 13px;min-height:52px;font-size:13px}#contato .capsule-round{flex-basis:52px;width:52px;font-size:26px}#contato .capsule-brand{font-size:18px}#contato .capsule-address{font-size:13px}}
+@media(prefers-reduced-motion:reduce){#contato .capsule-row{animation:none}}
+
+/* Fill the contact column and keep blue lettering readable on lime. */
+#contato .capsule-brand,#contato .capsule-wide{background:#a5fa19;color:#2020eb}
